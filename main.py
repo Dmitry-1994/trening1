@@ -30,15 +30,7 @@ class Student:
         return self.averageGrade() == other.averageGrade()
 
     def averageGrade(self):    # Расчет средней оценки конкретного студента по всем курсам
-        if not self.grades:
-            return 0
-        total = 0
-        count = 0
-        for course in self.grades.values():
-            for grade in course:
-                total += grade
-                count += 1
-        return total / count
+        return averageGradeAllCourse(self.grades)
 
 
 class Mentor:
@@ -64,15 +56,7 @@ class Lecturer(Mentor):
                 f'\nСредняя оценка за лекции: {self.averageGrade()}')
 
     def averageGrade(self):    # Расчет средней оценки конкретного лектора по всем курсам
-        if not self.grades:
-            return 0
-        total = 0
-        count = 0
-        for course in self.grades.values():
-            for grade in course:
-                total += grade
-                count += 1
-        return total / count
+        return averageGradeAllCourse(self.grades)
 
     def __eq__(self, other):
         if not isinstance(other, Lecturer):
@@ -92,6 +76,17 @@ class Reviewer(Mentor):
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
+
+def averageGradeAllCourse(gradesDict):    # Расчет средней оценки конкретного студента/лектора по всем курсам
+    if not gradesDict:
+        return 0
+    total = 0
+    count = 0
+    for course in gradesDict.values():
+        for grade in course:
+            total += grade
+            count += 1
+    return total / count
 
 def averageGradeStudentForCourse(students, course):     # Расчет средней оценки за домашние задания по всем студентам в рамках конкретного курса
     total = 0
